@@ -132,7 +132,7 @@ void MySQLServiceTest()
             using (var dbCommand = connection.CreateCommand())
             {
                 dbCommand.CommandText = @"INSERT INTO Test (Name) VALUES (@name)";
-                dbCommand.Parameters.AddWithValue("@name", "Alice");
+                dbCommand.Parameters.AddWithValue("@name", "John Doe");
                 try
                 {
                     dbCommand.ExecuteNonQuery();
@@ -150,7 +150,8 @@ void MySQLServiceTest()
                 dbCommand.CommandText = @"SELECT COUNT(*) FROM Test";
                 try
                 {
-                    int count = (int)dbCommand.ExecuteScalar();
+                    object result = dbCommand.ExecuteScalar();
+                    long count = Convert.ToInt64(result);
                     Console.WriteLine($"Es gibt {count} Benutzer.");
                 }
                 catch (Exception e)
@@ -166,12 +167,14 @@ void MySQLServiceTest()
                 dbCommand.CommandText = @"SELECT Id, Name FROM Test";
                 try
                 {
-                    var reader = dbCommand.ExecuteReader();
-                    while (reader.Read())
+                    using (var reader = dbCommand.ExecuteReader())
                     {
-                        int id = reader.GetInt32(0); // Spalte 0 = Id
-                        string name = reader.GetString(1); // Spalte 1 = Name
-                        Console.WriteLine($"Id={id}, Name={name}");
+                        while (reader.Read())
+                        {
+                            int id = reader.GetInt32(0); // Spalte 0 = Id
+                            string name = reader.GetString(1); // Spalte 1 = Name
+                            Console.WriteLine($"Id={id}, Name={name}");
+                        }
                     }
                 }
                 catch (Exception e)
@@ -190,16 +193,18 @@ void MySQLServiceTest()
                 dbCommand.Parameters.AddWithValue("@id", searchId);
                 try
                 {
-                    var reader = dbCommand.ExecuteReader();
-                    if (reader.Read())
+                    using (var reader = dbCommand.ExecuteReader())
                     {
-                        int id = reader.GetInt32(0);
-                        string name = reader.GetString(1);
-                        Console.WriteLine($"Gefundener Datensatz -> Id={id}, Name={name}");
-                    }
-                    else
-                    {
-                        Console.WriteLine($"Kein Datensatz mit Id={searchId} gefunden.");
+                        if (reader.Read())
+                        {
+                            int id = reader.GetInt32(0);
+                            string name = reader.GetString(1);
+                            Console.WriteLine($"Gefundener Datensatz -> Id={id}, Name={name}");
+                        }
+                        else
+                        {
+                            Console.WriteLine($"Kein Datensatz mit Id={searchId} gefunden.");
+                        }
                     }
                 }
                 catch (Exception e)

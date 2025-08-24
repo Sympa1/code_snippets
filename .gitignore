@@ -2,6 +2,8 @@
 # .gitignore für C# / .NET Projekt
 # ==================================
 
+CSharp/.env
+
 # Build results
 [Dd]ebug/
 [Dd]ebugPublic/
@@ -259,6 +261,7 @@ CConversionReportEx.xml
 
 # Microsoft Fakes
 FakesAssemblies/
+Gefundener Datensatz -> Id=1, Name=Jane Doe
 
 # GhostDoc plugin setting file
 *.GhostDoc.xml
