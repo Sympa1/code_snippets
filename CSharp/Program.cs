@@ -229,5 +229,5 @@ void MySQLServiceTest()
 
 //TestLog();
 //SQLiteServiceTest();
-EnvLoader.LoadDotEnv();
-MySQLServiceTest();
+//EnvLoader.LoadDotEnv();
+//MySQLServiceTest();
