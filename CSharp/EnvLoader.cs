@@ -1,4 +1,4 @@
-using DotNetEnv;
+using DotNetEnv; // --> NuGet-Paket DotNetEnv
 
 namespace CSharp;
 

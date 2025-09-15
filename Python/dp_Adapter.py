@@ -12,6 +12,10 @@ Kurze Erklärung:
 Ein Adapter passt die Schnittstelle eines Objekts an die Schnittstelle an, die ein Client erwartet.
 Dadurch kann der Client mit dem Objekt interagieren, ohne dass Änderungen an den beteiligten Klassen
 erforderlich sind.
+
+Nachteile:
+Adapter können die Komplexität des Codes erhöhen, da sie eine zusätzliche Abstraktionsschicht
+einführen. Dies kann die Wartbarkeit erschweren.
 """
 
 # Dummy-Klasse, deren Schnittstelle nicht zum Client passt

@@ -1,6 +1,9 @@
 import json
 
 class Config:
+    """
+    Eine Klasse zur Verwaltung der Konfigurationseinstellungen in einer JSON-Datei.
+    """
     def __init__(self, filename = "config.json"):
         self.filename = filename
         self.data = {}

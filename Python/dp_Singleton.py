@@ -14,6 +14,11 @@ Ein Singleton stellt sicher, dass von einer Klasse nur eine einzige Instanz exis
 Die einfache Variante ist nicht thread-sicher und eignet sich für Single-Thread-Anwendungen.
 Die thread-sichere Variante verwendet einen Lock, damit auch bei parallelem Zugriff aus mehreren Threads garantiert nur eine Instanz erzeugt wird.
 Beide Varianten bieten eine Dummy-Methode, um die Nutzung zu demonstrieren.
+
+Nachteile:
+Der Singleton kann zum Flaschenhals werden, wenn er Schreiboperationen durchführt und von vielen Threads
+gleichzeitig genutzt wird. Dann müssen alle Zugriffe nacheinander abgearbeitet werden.
+Singletons können die Testbarkeit des Codes erschweren, da sie globale Zustände einführen.
 """
 
 # Einfacher Singleton (nicht thread-sicher)

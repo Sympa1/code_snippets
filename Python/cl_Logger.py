@@ -2,12 +2,12 @@ from datetime import datetime
 
 
 class Logger:
+    """
+    Diese Klasse stellt einen Logger bereit, der Nachrichten und Fehlermeldungen
+    in eine Protokolldatei schreibt. Die Einträge werden mit einem Zeitstempel und einer Überschrift versehen.
+    Die Konstruktor-Methode erwartet einen Dateinamen als Parameter.
+    """
     def __init__(self, log_file_name: str = "error.log"):
-        """
-        Diese Klasse stellt einen Logger bereit, der Nachrichten und Fehlermeldungen
-        in eine Protokolldatei schreibt. Die Einträge werden mit einem Zeitstempel und einer Überschrift versehen.
-        Die Konstruktor-Methode erwartet einen Dateinamen als Parameter.
-        """
         self._log_file_name = log_file_name  # _ = protected
 
     def write_to_log_file(self, message: str, headline: str = "Error"):
