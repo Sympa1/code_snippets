@@ -79,6 +79,9 @@ class Observer:
         # Wird vom Subject aufgerufen, wenn sich die Temperatur ändert
         pass
 
+# In Python erbt diese Klasse nicht von einer speziellen Subject-Basisklasse,
+# sondern implementiert die Observer-Methoden selbst.
+# In Sprachen wie C# wird oft ein Interface oder eine Basisklasse für das Subject verwendet.
 class TemperatureSensor:
     def __init__(self):
         # Initialisiert die Temperatur und die Liste der Beobachter
