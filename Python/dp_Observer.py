@@ -22,8 +22,8 @@ es eine Methode auf, die alle registrierten Beobachter informiert.
 
 Nachteile:
 - Erhöhter Aufwand für die Implementierung, da das Subject die Beobachter verwalten muss.
-- Potenzielle Leistungseinbußen, wenn viele Beobachter registriert sind und häufige Änderungen
-  am Subject stattfinden.
+- Es werden alle Änderungen an den Beobachter weitergegeben, auch wennn diese nicht relevant sind.
+- Beim löschen eines Beobachters muss darauf geachtet werden, dass diese auch beim Subject entfernt werden.
 """
 
 # Beispiel OHNE Observer Pattern (Polling)
@@ -88,6 +88,10 @@ class TemperatureSensor:
     def add_observer(self, observer):
         # Fügt einen neuen Beobachter hinzu
         self.observers.append(observer)
+    
+    def remove_observer(self, observer):
+        # Entfernt einen Beobachter
+        self.observers.remove(observer)
 
     def set_temperature(self, value):
         # Setzt die Temperatur und benachrichtigt alle Beobachter
