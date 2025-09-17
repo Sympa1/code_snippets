@@ -2,6 +2,11 @@
 # .gitignore für C# / .NET Projekt
 # ==================================
 
+# Eigener Stuff
+*.env
+.idea/
+.vscode/
+
 CSharp/.env
 
 # Build results
