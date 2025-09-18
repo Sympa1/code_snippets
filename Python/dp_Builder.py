@@ -77,6 +77,7 @@ class SchrankBuilder:
 
 # Beispiel-Nutzung des Builders
 builder = SchrankBuilder()                  # Erstellt einen neuen Builder
+# Die runden Klammern ermöglichen die mehrzeilige Kettenbildung.
 schrank = (builder
            .mitOberflaeche("lackiert")      # Setzt die Oberfläche auf "lackiert"
            .mitMetallschiene()              # Fügt eine Metallschiene hinzu
