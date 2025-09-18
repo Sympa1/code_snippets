@@ -16,10 +16,6 @@ Objektklassen.
 
 Nachteile:
 - Erhöhter Aufwand durch zusätzliche Klassen und Methoden.
-- Kann zu einer Vielzahl von Factory-Klassen führen, wenn viele verschiedene Objekttypen erzeugt werden müssen.
-- Die Factory muss sorgfältig entworfen werden, um alle möglichen Objektarten abzudecken.
-        # Erzeugt und gibt das fertige Schrank-Objekt zurück
-        return Schrank(self.oberflaeche, self.metallschiene, self.einlegeboden, self.kleiderstange)
 """
 
 # Einfaches Factory Pattern Beispiel mit Mahlzeiten
