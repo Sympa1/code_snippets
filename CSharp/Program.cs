@@ -1,6 +1,8 @@
 ﻿using CSharp;
 using DotNetEnv; // --> NuGet-Paket
 
+// TODO: Vielleicht sollte ich die DB-Services in der selbigen Datei aufrufen. Das könnte übersichtlicher sein.
+
 # region notes
 // Das @ vor dem String macht den C#-String zu einem "verbatim string", d.h. Backslashes müssen nicht escaped werden
 // und der String kann über mehrere Zeilen gehen. So lassen sich lange SQL-Statements sauber und lesbar schreiben.
