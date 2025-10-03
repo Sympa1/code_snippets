@@ -1,15 +1,16 @@
 """
 Problemstellung:
-Client soll von den Details der Objekterzeugung entkoppelt werden. Außerdem soll er nicht entscheiden,
-welches konkrete Objekt benöttigt wird.
+Der Client soll von den Details der Objekterzeugung entkoppelt werden. Außerdem soll er nicht entscheiden
+müssen, welches konkrete Objekt benötigt wird.
 
 Beispiele:
-Einlesen von Dateien in verschiedenen Formaten, ohne die Details dieses Vorgangskönnen zu müssen.
-Objekt Pooling, bei dem Objekte wiederverwendet werden, ohne dass der Client die Details der Wiederverwendung
-kennen muss.
+- Einlesen von Dateien in verschiedenen Formaten (PDF, CSV, JSON) basierend auf Dateierweiterung
+- Logger-Erstellung je nach Konfiguration (FileLogger, ConsoleLogger, DatabaseLogger)
+- Datenbank-Verbindungen für verschiedene Systeme (MySQL, PostgreSQL, SQLite)
+- GUI-Elemente für verschiedene Betriebssysteme (WindowsButton, MacButton, LinuxButton)
 
 Kurze Erklärung:
-Das Factory-Pattern stellt eine Schnittstelle zur Verfügung, um Objekte zu erzeugen, ohne die konkreten Klassen
+Das Simple Factory-Pattern stellt eine Schnittstelle zur Verfügung, um Objekte zu erzeugen, ohne die konkreten Klassen
 der zu erzeugenden Objekte angeben zu müssen. Stattdessen wird die Entscheidung, welches Objekt erzeugt wird,
 an eine Factory-Klasse oder -Methode delegiert. Dies ermöglicht eine lose Kopplung zwischen dem Client und den konkreten
 Objektklassen.
@@ -18,7 +19,7 @@ Nachteile:
 - Erhöhter Aufwand durch zusätzliche Klassen und Methoden.
 """
 
-# Einfaches Factory Pattern Beispiel mit Mahlzeiten
+# Einfaches Factory Pattern Beispiel mit Mahlzeiten.
 # In C# würde man hier ein Interface verwenden: public interface IMahlzeit
 
 # Basis-Klasse für alle Mahlzeiten (Interface-Ersatz in Python)
