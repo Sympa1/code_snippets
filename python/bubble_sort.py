@@ -15,7 +15,7 @@ SCHLEIFENVARIABLEN:
   -> Bei 6 Elementen: 5 Durchläufe (nach 5 Durchläufen sind alle Elemente sortiert)
   -> Verkürzt die innere Schleife durch `len(input_list) - (1 + i)`:
     - Durchlauf 1 (i=0): 5 Vergleiche → größtes Element wandert ans Ende
-    - Durchlauf 2 (i=1): 4 Vergleiche → zweitgrößtes Element ans vorletzte Position
+    - Durchlauf 2 (i=1): 4 Vergleiche → zweitgrößtes Element an vorletzte Position
     - Durchlauf 3 (i=2): 3 Vergleiche → drittgrößtes Element an drittletzte Position
     - usw.
 
@@ -30,16 +30,16 @@ ZWEI IMPLEMENTIERUNGEN:
 
 # TODO: Zeitmessung mittels Zeitstempel implementieren (z.B. mit time.time() vor/nach Sortierung)
 
-# Ausgangsliste mit unsortieren Ganzzahlen definieren
+# Ausgangsliste mit Umsortieren Ganzzahlen definieren
 input_list = [10, 2, 5, 4, 80, 43]
 # Unsortierte Liste zur Kontrolle ausgeben
 print("Unsortierte Liste:", input_list)
 
-# Äußere Schleife: Durchläufe für jeden zu platzierenden Wert (-1 da letzter Wert automatisch sortiert ist)
+# Äußere Schleife: Durchläufe für jeden zu platzierenden Wert (-1, da letzter Wert automatisch sortiert ist)
 for i in range (len(input_list) - 1):
     # Innere Schleife: Vergleiche benachbarte Elemente (Ende verkürzt sich mit jedem Durchlauf um bereits sortierte Elemente)
     for j in range(len(input_list) - (1 + i)):
-        # Prüfen ob aktuelles Element größer als nächstes ist (aufsteigende Sortierung)
+        # Prüfen, ob das aktuelle Element größer als Nächstes ist (aufsteigende Sortierung)
         if input_list[j] > input_list[j + 1]:
             # Größeres Element aus Liste entfernen und temporär speichern
             temp = input_list.pop(j)
