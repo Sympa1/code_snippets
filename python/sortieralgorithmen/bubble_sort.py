@@ -30,8 +30,16 @@ ZWEI IMPLEMENTIERUNGEN:
 
 # TODO: Zeitmessung mittels Zeitstempel implementieren (z.B. mit time.time() vor/nach Sortierung)
 
+# Ausgangsliste mit Umsortieren Wortern definieren
+#input_list = ["Banane", "Apfel", "Orange", "Mango", "Birne", "Kirsche"]
+
 # Ausgangsliste mit Umsortieren Ganzzahlen definieren
-input_list = [10, 2, 5, 4, 80, 43]
+input_list = [10, 2, 5, 4, 80, 43, 10, 2, 5, 4, 80, 43]
+
+# Zusätzliche eindeutige Werte ergänzen
+input_list += [17, 23, 1, 99, 7, 56]
+input_list += [34, 65, 12, 88, 3, 77]
+
 # Unsortierte Liste zur Kontrolle ausgeben
 print("Unsortierte Liste:", input_list)
 
