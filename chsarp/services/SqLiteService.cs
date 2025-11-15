@@ -130,4 +130,101 @@ namespace chsarp.services
             _connection?.Dispose();
         }
     }
+
+    /// <summary>
+    /// Beispielklasse zur Demonstration der Verwendung von SqLiteService.
+    /// Zeigt verschiedene SQLite-Operationen wie CREATE TABLE, INSERT, SELECT und COUNT.
+    /// </summary>
+    public static class SqLiteServiceExample
+    {
+        /// <summary>
+        /// Demonstriert die grundlegende Verwendung des SqLiteService.
+        /// Erstellt eine Testtabelle, fügt Daten ein, liest sie aus und zählt die Einträge.
+        /// </summary>
+        public static void SqLiteServiceTest()
+        {
+            SqLiteService dbServiceSqLite = new SqLiteService();
+        try
+        {
+            using (var dbConnection = dbServiceSqLite.OpenConnection())
+            {
+                if (dbConnection == null)
+                {
+                    FileLogService.WriteToLog("Konnte keine Verbindung zur Datenbank herstellen.");
+                    return;
+                }
+                
+                // Create Table
+                using (var dbCommand = dbConnection.CreateCommand())
+                {
+                    dbCommand.CommandText = @"CREATE TABLE IF NOT EXISTS test (id INTEGER PRIMARY KEY AUTOINCREMENT,
+                                                                                name TEXT NOT NULL)";
+                    try
+                    {
+                        dbCommand.ExecuteNonQuery();
+                    }
+                    catch (Exception e)
+                    {
+                        FileLogService.WriteToLog($"{e}");
+                        throw;
+                    }
+                }
+
+                // Insert
+                using (var dbCommand = dbConnection.CreateCommand())
+                {
+                    dbCommand.CommandText = @"INSERT INTO test (name) VALUES (@name)";
+                    dbCommand.Parameters.AddWithValue("@name", "Test");
+                    try
+                    {
+                        dbCommand.ExecuteNonQuery();
+                    }
+                    catch (Exception e)
+                    {
+                        FileLogService.WriteToLog($"{e}");
+                        throw;
+                    }
+                }
+
+                // Select
+                using (var command = dbConnection.CreateCommand())
+                {
+                    command.CommandText = "SELECT * FROM test";
+                    using (var reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            Console.WriteLine(reader.GetString(1));
+                        }
+                    }
+                }
+
+                // Zählt
+                using (var command = dbConnection.CreateCommand())
+                {
+                    command.CommandText = "SELECT COUNT(*) FROM test";
+                    try
+                    {
+                        var count = command.ExecuteScalar();
+                        Console.WriteLine(count);
+                    }
+                    catch (Exception e)
+                    {
+                        FileLogService.WriteToLog($"{e}");
+                    }
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            FileLogService.WriteToLog($"{e}");
+            throw; // Wirft die Exception erneut, damit sie vom aufrufenden Code behandelt werden kann
+        }
+        finally
+        {
+            dbServiceSqLite.CloseConnection();
+            dbServiceSqLite.Dispose(); // Ressourcen freigeben
+        }
+    }
+    }
 }
