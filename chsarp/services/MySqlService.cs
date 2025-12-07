@@ -8,7 +8,7 @@ namespace chsarp.services
     /// Verwaltet den Lebenszyklus der Verbindung und stellt Methoden zum Öffnen und Schließen bereit.
     /// Implementiert IDisposable für eine ordnungsgemäße Ressourcenfreigabe.
     /// </summary>
-    public class DatabaseService : IDisposable
+    public class MySqlService : IDisposable
     {
         /// <summary>
         /// Die Verbindungszeichenfolge für die MySQL-Datenbank.
@@ -32,7 +32,7 @@ namespace chsarp.services
         /// Die Verbindung wird im Konstruktor noch nicht geöffnet. Dazu ist ein Aufruf von OpenConnection() erforderlich.
         /// Bei fehlenden Verbindungsdaten wird eine Exception protokolliert und eine Exception geworfen.
         /// </remarks>
-        public DatabaseService()
+        public MySqlService()
         {
             var server = Env.GetString("MYSQL_SERVER");
             var port = Env.GetInt("MYSQL_PORT");
@@ -115,6 +115,136 @@ namespace chsarp.services
         public void Dispose()
         {
             _connection.Dispose();
+        }
+    }
+
+    public class MySqlTest
+    {
+        // MySQLService Test
+        void MySQLServiceTest()
+        {
+            MySqlService dbServiceMySQL = new MySqlService();
+
+            try
+            {
+                using (var connection = dbServiceMySQL.OpenConnection())
+                {
+                    // Beispiel: Tabelle erstellen
+                    using (var dbCommand = connection.CreateCommand())
+                    {
+                        dbCommand.CommandText = @"
+                                CREATE TABLE IF NOT EXISTS Test (
+                                    Id INT AUTO_INCREMENT PRIMARY KEY,
+                                    Name VARCHAR(100) NOT NULL
+                                )";
+                        try
+                        {
+                            dbCommand.ExecuteNonQuery();
+                        }
+                        catch (Exception e)
+                        {
+                            FileLogService.WriteToLog($"{e}");
+                            throw;
+                        }
+                    }
+
+                    // Beispiel: Datensatz einfügen
+                    using (var dbCommand = connection.CreateCommand())
+                    {
+                        dbCommand.CommandText = @"INSERT INTO Test (Name) VALUES (@name)";
+                        dbCommand.Parameters.AddWithValue("@name", "John Doe");
+                        try
+                        {
+                            dbCommand.ExecuteNonQuery();
+                        }
+                        catch (Exception e)
+                        {
+                            FileLogService.WriteToLog($"{e}");
+                            throw;
+                        }
+                    }
+
+                    // Beispiel: Anzahl Datensätze zählen
+                    using (var dbCommand = connection.CreateCommand())
+                    {
+                        dbCommand.CommandText = @"SELECT COUNT(*) FROM Test";
+                        try
+                        {
+                            object result = dbCommand.ExecuteScalar();
+                            long count = Convert.ToInt64(result);
+                            Console.WriteLine($"Es gibt {count} Benutzer.");
+                        }
+                        catch (Exception e)
+                        {
+                            FileLogService.WriteToLog($"{e}");
+                            throw;
+                        }
+                    }
+
+                    // Beispiel: Alle Datensätze auslesen
+                    using (var dbCommand = connection.CreateCommand())
+                    {
+                        dbCommand.CommandText = @"SELECT Id, Name FROM Test";
+                        try
+                        {
+                            using (var reader = dbCommand.ExecuteReader())
+                            {
+                                while (reader.Read())
+                                {
+                                    int id = reader.GetInt32(0); // Spalte 0 = Id
+                                    string name = reader.GetString(1); // Spalte 1 = Name
+                                    Console.WriteLine($"Id={id}, Name={name}");
+                                }
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            FileLogService.WriteToLog($"{e}");
+                            throw;
+                        }
+                    }
+
+                    // Beispiel: Einen bestimmten Datensatz auslesen
+                    int searchId = 1;
+
+                    using (var dbCommand = connection.CreateCommand())
+                    {
+                        dbCommand.CommandText = @"SELECT Id, Name FROM Test WHERE Id = @id";
+                        dbCommand.Parameters.AddWithValue("@id", searchId);
+                        try
+                        {
+                            using (var reader = dbCommand.ExecuteReader())
+                            {
+                                if (reader.Read())
+                                {
+                                    int id = reader.GetInt32(0);
+                                    string name = reader.GetString(1);
+                                    Console.WriteLine($"Gefundener Datensatz -> Id={id}, Name={name}");
+                                }
+                                else
+                                {
+                                    Console.WriteLine($"Kein Datensatz mit Id={searchId} gefunden.");
+                                }
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            FileLogService.WriteToLog($"{e}");
+                            throw;
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                FileLogService.WriteToLog($"{e}");
+                throw;
+            }
+            finally
+            {
+                dbServiceMySQL.CloseConnection();
+                dbServiceMySQL.Dispose(); // Ressourcen freigeben?
+            }
         }
     }
 }
